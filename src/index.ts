@@ -3,14 +3,19 @@ import config, { type IConfig } from 'config';
 import fp from 'fastify-plugin';
 import type { FastifyPluginOptions, FastifyInstance } from 'fastify';
 
+type Config = {
+  [key: string]: Config | string | number | boolean | null;
+};
+
 interface FastifyNodeConfigPluginOptions<T> extends FastifyPluginOptions {
   schema?: JSONSchemaType<T>;
   safe?: boolean;
 }
 
+
 const wrapConfig = (sourceConfig: IConfig, throwOnMissing: boolean) => {
-  const applyConfigCheck = (obj: any, path: string) => {
-    const chkdConfig: any = {};
+  const applyConfigCheck = (obj: Config, path: string) => {
+    const chkdConfig: Config = {};
 
     for (const [prop, value] of Object.entries(obj)) {
       const configPath = path === '' ? prop : `${path}.${prop}`;
