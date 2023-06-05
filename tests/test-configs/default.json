@@ -1,0 +1,22 @@
+{
+    "db": {
+        "host": "localhost",
+        "port": 27017,
+        "name": "test"
+    },
+    "server": {
+        "port": 3000
+    },
+    "log": {
+        "level": "debug",
+        "file": "logs/app.log"
+    },
+    "misc-nested": {
+        "misc": {
+            "nested": {
+                "value": "nested value"
+            }
+        },
+        "value": "misc-nested value"
+    }
+}
