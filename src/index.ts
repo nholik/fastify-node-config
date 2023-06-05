@@ -1,18 +1,19 @@
 import config from 'config';
 import fp from 'fastify-plugin';
 import type { JSONSchemaType } from 'ajv';
-import type { FastifyPluginOptions, FastifyInstance } from 'fastify';
+import type { FastifyInstance } from 'fastify';
 import { wrapConfig, validateSchema } from './util.js';
 
-interface FastifyNodeConfigPluginOptions<T> extends FastifyPluginOptions {
-  schema?: JSONSchemaType<T>;
+interface PluginOptions<T> {
+  schema: JSONSchemaType<T>;
   safe?: boolean;
 }
 
-const fastifyNodeConfigPlugin = async <T>(
+function fastifyNodeConfigPlugin<T>(
   fastify: FastifyInstance,
-  opts?: FastifyNodeConfigPluginOptions<T>
-) => {
+  opts: PluginOptions<T>,
+  done: (err?: Error) => void
+) {
   const throwOnMissing = opts?.safe ?? true;
   const checkedConfig = wrapConfig(config, throwOnMissing);
 
@@ -20,8 +21,11 @@ const fastifyNodeConfigPlugin = async <T>(
     validateSchema(checkedConfig, opts.schema);
   }
 
-  fastify.decorate('config', { config: checkedConfig as T });
-};
+  fastify.decorate('config', {
+    config: checkedConfig as T,
+  });
+  done();
+}
 
 const plugin = fp(fastifyNodeConfigPlugin, {
   fastify: '>=3.0.0',
