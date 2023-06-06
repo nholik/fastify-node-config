@@ -1,14 +1,32 @@
 {
   "name": "fastify-node-config",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Plugin to help integrate thie node-config library with Fastify",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
-  "repository": "git@github.com:nholik/fastify-node-config.git",
+  "types": "dist/types/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com:nholik/fastify-node-config.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nholik/fastify-node-config/issues"
+  },
+  "homepage": "https://github.com/nholik/fastify-node-config#readme",
   "author": "Nick Holik <nick@nlh3.com>",
   "license": "MIT",
   "public": true,
+  "publishConfig": {
+    "access": "public"
+  },
   "packageManager": "yarn@3.6.0",
+  "keywords": [
+    "fastify",
+    "plugin",
+    "node-config",
+    "env",
+    "environment"
+  ],
   "scripts": {
     "build:esm": "tsc -p tsconfig.esm.json",
     "build:cjs": "tsc",
