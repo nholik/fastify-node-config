@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { validateSchema } from '../../../src/util.js';
 import { join } from 'node:path';
 import { JSONSchemaType } from 'ajv';
-import { AppConfig, schema } from '../../test-configs/basic-nested/schema.js';
+import { schema } from '../../test-configs/basic-nested/schema.js';
 
 describe('validateSchema', async () => {
   describe('nested config', async () => {

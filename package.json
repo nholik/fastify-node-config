@@ -15,7 +15,7 @@
     "clean": "rimraf dist",
     "lint": "eslint ./src --ext .ts",
     "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "ajv": "^8.12.0",

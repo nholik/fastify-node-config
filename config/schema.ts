@@ -13,14 +13,6 @@ export interface AppConfig {
     level: string;
     file: string;
   };
-  nested: {
-    misc: {
-      nested: {
-        value: string;
-      };
-    };
-    value: string;
-  };
 }
 
 export const schema: JSONSchemaType<AppConfig> = {
@@ -50,26 +42,6 @@ export const schema: JSONSchemaType<AppConfig> = {
       },
       required: ['level', 'file'],
     },
-    nested: {
-      type: 'object',
-      properties: {
-        misc: {
-          type: 'object',
-          properties: {
-            nested: {
-              type: 'object',
-              properties: {
-                value: { type: 'string' },
-              },
-              required: ['value'],
-            },
-          },
-          required: ['nested'],
-        },
-        value: { type: 'string' },
-      },
-      required: ['value', 'misc'],
-    },
   },
-  required: ['db', 'server', 'log', 'nested'],
+  required: ['db', 'server', 'log'],
 };
