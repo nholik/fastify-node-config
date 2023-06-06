@@ -13,3 +13,6 @@ build
 /tests
 *.test.js
 *.spec.js
+vitest.config.ts
+coverage
+tsconfig.*
