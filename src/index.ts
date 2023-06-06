@@ -5,7 +5,7 @@ import type { FastifyInstance } from 'fastify';
 import { wrapConfig, validateSchema } from './util.js';
 
 interface PluginOptions<T> {
-  schema: JSONSchemaType<T>;
+  schema?: JSONSchemaType<T>;
   safe?: boolean;
 }
 

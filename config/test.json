@@ -10,13 +10,5 @@
     "log": {
         "level": "debug",
         "file": "logs/app.log"
-    },
-    "nested": {
-        "misc": {
-            "nested": {
-                "value": "nested value"
-            }
-        },
-        "value": "misc-nested value"
     }
 }
