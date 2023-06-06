@@ -5,6 +5,9 @@
     ],
     "compilerOptions": {
         "outDir": "dist/cjs",
+        "sourceMap": true,
+        "declaration": true,
+        "declarationDir": "./dist/types",
     },
     "include": [
         "./src/**/*.ts"

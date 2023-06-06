@@ -1,0 +1,15 @@
+config
+node_modules
+dist
+build
+*.log
+.secret
+.idea
+
+.*
+!.npmignore
+
+/test
+/tests
+*.test.js
+*.spec.js
