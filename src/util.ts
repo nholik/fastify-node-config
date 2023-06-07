@@ -8,7 +8,7 @@ type Config = {
 const createErrorHandler = (throwOnMissing: boolean) => {
   return {
     get: function (target: Config, prop: string) {
-      if (!(prop in target)) {
+      if (prop !== 'toJSON' && !(prop in target)) {
         if (throwOnMissing) {
           throw new Error(`Config property '${prop}' not found.`);
         }
