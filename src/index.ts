@@ -22,7 +22,9 @@ function fastifyNodeConfigPlugin<T>(
   }
 
   fastify.decorate('config', {
-    config: checkedConfig as T,
+    getter() {
+      return checkedConfig;
+    },
   });
   done();
 }
