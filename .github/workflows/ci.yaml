@@ -1,33 +1,24 @@
-name: Node.js CI
-
-on:
-  push:
-    branches: [ $default-branch ]
-  pull_request:
-    branches: [ $default-branch ]
+name: CI
+on: [push]
 
 jobs:
   build:
-
+    name: Test
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js 18.x
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18.x
-        cache: 'npm'
-    - name: Install dependencies
-       run: yarn install
+      - uses: actions/checkout@v3
 
-    - name: Run tests
-       run: yarn test:coverage
+      - name: Set Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
 
-    - name: Build package
-       run: yarn build
+      - name: Install dependencies
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: install 
 
-    # - name: Publish to npm
-    #    run: npm publish
-    #     env:
-    #       NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Run tests 
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: test:coverage 
