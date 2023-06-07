@@ -6,17 +6,19 @@ Fastify plugin allow access to configuration values created via [node-config](ht
 
 If you are using this library it is assumed you already are or are intended to use `node-config`.  Regardless of the situation, however, make sure to install `node-config` as it is peer dependency of this plugin.
 
+:exclamation: note that `node-config` uses the package name `config`
+
 ### Yarn
 
 ```shell
-yarn add fastify-node-config node-config 
+yarn add fastify-node-config config 
 # Install fastify-node-config and node-config dependencies
 ```
 
 ### NPM
 
 ```shell
-npm install fastify-node-config node-config
+npm install fastify-node-config config
 # Install fastify-node-config and node-config dependencies
 ```
 
