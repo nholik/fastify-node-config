@@ -17,6 +17,9 @@ describe('wrapConfig', async () => {
       it('gives null for any property', () => {
         expect(wrappedConfig.missing).toBeNull();
       });
+      it('allows access to toJSON', () => {
+        expect((wrappedConfig as any).toJSON).toBeUndefined();
+      });
     });
     describe('with throwOnMissing = true', () => {
       const wrappedConfig = wrapConfig(config, true);
@@ -25,6 +28,9 @@ describe('wrapConfig', async () => {
       });
       it('throws error for any property', () => {
         expect(() => wrappedConfig.missing).toThrow();
+      });
+      it('allows access to toJSON', () => {
+        expect((wrappedConfig as any).toJSON).toBeUndefined();
       });
     });
   });

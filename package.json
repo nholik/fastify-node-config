@@ -1,6 +1,6 @@
 {
   "name": "fastify-node-config",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Plugin to help integrate thie node-config library with Fastify",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
