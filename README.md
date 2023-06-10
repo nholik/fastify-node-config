@@ -1,4 +1,5 @@
 # fastify-node-config
+[![NPM Version](https://img.shields.io/npm/v/fastify-node-config)](https://www.npmjs.com/package/fastify-node-config)
 
 Fastify plugin allow access to configuration values created via [node-config](https://github.com/node-config/node-config) on a fastify instance.  Provides optional validation via [https://ajv.js.org/](Ajv).  Useful if you prefer using `node-config` for organizing and setting up your application's configuration but would like the values to be accessible in your application similar to [@fastify/env](https://github.com/fastify/fastify-env).
 
