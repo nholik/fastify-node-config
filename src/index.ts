@@ -11,7 +11,7 @@ interface PluginOptions<T> {
 
 function fastifyNodeConfigPlugin<T>(
   fastify: FastifyInstance,
-  opts: PluginOptions<T>,
+  opts: PluginOptions<T> = {},
   done: (err?: Error) => void
 ) {
   const throwOnMissing = opts?.safe ?? true;
