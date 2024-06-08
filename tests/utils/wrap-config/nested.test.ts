@@ -11,7 +11,8 @@ describe('wrapConfig', async () => {
 
     const config = await import('config');
     describe('with throwOnMissing = false', () => {
-      const wrappedConfig = wrapConfig(config, false);
+      const wrappedConfig = wrapConfig(config, {}, false);
+
       it('should be defined', () => {
         expect(wrappedConfig).toBeDefined();
       });
@@ -51,7 +52,7 @@ describe('wrapConfig', async () => {
     });
 
     describe('with throwOnMissing = true', () => {
-      const wrappedConfig = wrapConfig(config, true);
+      const wrappedConfig = wrapConfig(config, {}, true);
       it('should be defined', () => {
         expect(wrappedConfig).toBeDefined();
       });
