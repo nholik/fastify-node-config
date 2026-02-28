@@ -35,11 +35,29 @@ describe('wrapConfig', async () => {
         expect(db.port).toBeTypeOf('number');
       });
 
+      it('enumerates leaf properties', () => {
+        const db = wrappedConfig.db as any;
+        expect(Object.keys(db)).toContain('host');
+      });
+
       it('returns a deeply nested property', () => {
         const nested = wrappedConfig.nested as any;
         const misc = nested.misc as any;
         const secondNested = misc.nested as any;
         expect(secondNested.value).toBe('nested value');
+      });
+
+      it('returns arrays as arrays', () => {
+        const arrayValues = wrappedConfig.arrayValues as any;
+        expect(Array.isArray(arrayValues)).toBe(true);
+        expect(arrayValues[1]).toBe(2);
+      });
+
+      it('returns nested arrays as arrays', () => {
+        const nested = wrappedConfig.nested as any;
+        const misc = nested.misc as any;
+        expect(Array.isArray(misc.items)).toBe(true);
+        expect(misc.items[0]).toBe('a');
       });
 
       it('returns null if property is missing', () => {

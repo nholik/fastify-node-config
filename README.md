@@ -1,7 +1,7 @@
 # fastify-node-config
 [![NPM Version](https://img.shields.io/npm/v/fastify-node-config)](https://www.npmjs.com/package/fastify-node-config)
 
-A Fastify plugin to expose configuration values created via [node-config](https://github.com/node-config/node-config) on a fastify instance.  Provides optional validation via [https://ajv.js.org/](Ajv).  Useful if you prefer using `node-config` for organizing and setting up your application's configuration but would like the values to be accessible in your application similar to [@fastify/env](https://github.com/fastify/fastify-env).
+A Fastify plugin to expose configuration values created via [node-config](https://github.com/node-config/node-config) on a fastify instance.  Provides optional validation via [Ajv](https://ajv.js.org/).  Useful if you prefer using `node-config` for organizing and setting up your application's configuration but would like the values to be accessible in your application similar to [@fastify/env](https://github.com/fastify/fastify-env).
 
 ## Install
 
@@ -55,7 +55,7 @@ const schema = {
 // both parameters are optional
 const options = {
   schema: schema, 
-  safe: true, 
+  safe: true, // optional, defaults to false
 }
 
 fastify
@@ -88,7 +88,7 @@ const schema = {
 // both parameters are optional
 const options = {
   schema: schema, 
-  safe: true, 
+  safe: true, // optional, defaults to false
 }
 
 fastify
@@ -156,7 +156,7 @@ export const schema: JSONSchemaType<AppConfig> = {
 
 const options = {
   schema: schema, 
-  safe: true, 
+  safe: true, // optional, defaults to false
 }
 
 fastify
@@ -187,7 +187,12 @@ Schema is a `JSONSchema` for validating your configuration values.  If validatio
 
 
 ### Safe
-A second parameter `safe` when true will cause an exception to occur when trying to access a non-existant property in your configuration.  Note that nested property chains that are not defined will follow normal semantics with accessing undefined properties.  For example
+A second parameter `safe` when true will cause an exception to occur when trying to access a non-existant property in your configuration. Defaults to `false`. Note that nested property chains that are not defined will follow normal semantics with accessing undefined properties. For example
+
+```js
+// safe defaults to false when omitted
+fastify.register(fastifyNodeConfig, { schema })
+```
 ```js
 type AppConfig = {
   db :{

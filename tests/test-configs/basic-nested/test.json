@@ -11,11 +11,20 @@
         "level": "debug",
         "file": "logs/app.log"
     },
+    "arrayValues": [
+        1,
+        2,
+        3
+    ],
     "nested": {
         "misc": {
             "nested": {
                 "value": "nested value"
-            }
+            },
+            "items": [
+                "a",
+                "b"
+            ]
         },
         "value": "misc-nested value"
     }

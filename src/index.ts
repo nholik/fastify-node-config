@@ -14,11 +14,11 @@ function fastifyNodeConfigPlugin<T>(
   opts: PluginOptions<T> = {},
   done: (err?: Error) => void
 ) {
-  const throwOnMissing = opts?.safe ?? true;
+  const throwOnMissing = opts?.safe ?? false;
   const checkedConfig = wrapConfig(config, throwOnMissing);
 
   if (opts?.schema) {
-    validateSchema(checkedConfig, opts.schema);
+    validateSchema(config.util.toObject(), opts.schema);
   }
 
   fastify.decorate('config', {
