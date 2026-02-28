@@ -187,7 +187,7 @@ Schema is a `JSONSchema` for validating your configuration values.  If validatio
 
 
 ### Safe
-A second parameter `safe` when true will cause an exception to occur when trying to access a non-existant property in your configuration. Defaults to `false`. Note that nested property chains that are not defined will follow normal semantics with accessing undefined properties. For example
+A second parameter `safe` when true will cause an exception to occur when trying to access a non-existent property in your configuration. Defaults to `false`. Note that nested property chains that are not defined will follow normal semantics with accessing undefined properties. For example
 
 ```js
 // safe defaults to false when omitted
