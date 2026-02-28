@@ -28,6 +28,17 @@ describe('fastify-node-config', async () => {
 
     expect(app.config).toBeTypeOf('object');
   });
+
+  it('supports a custom decorator name', async () => {
+    const app = fastify();
+    app.register(fastifyNodeConfig, {
+      schema,
+      decoratorName: 'appConfig',
+    });
+    await app.ready();
+
+    expect((app as any).appConfig).toBeTypeOf('object');
+  });
 });
 
 declare module 'fastify' {

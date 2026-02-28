@@ -179,7 +179,7 @@ declare module 'fastify' {
 
 ## Options
 
-Four optional parameters can be set when registering `fastify-node-config`: schema, safe, ajv, and ajvOptions.
+Five optional parameters can be set when registering `fastify-node-config`: schema, safe, decoratorName, ajv, and ajvOptions.
 
 
 ### Schema
@@ -193,6 +193,9 @@ A second parameter `safe` when true will cause an exception to occur when trying
 // safe defaults to false when omitted
 fastify.register(fastifyNodeConfig, { schema })
 ```
+
+### DecoratorName
+Customize the name of the decorated Fastify property. Defaults to `config`.
 
 ### Ajv
 Provide a preconfigured Ajv instance to use for validation. This is useful for adding custom keywords or formats. When `ajv` is provided, `ajvOptions` is ignored.

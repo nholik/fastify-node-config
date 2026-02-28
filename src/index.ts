@@ -9,6 +9,7 @@ interface PluginOptions<T> {
   safe?: boolean;
   ajv?: Ajv;
   ajvOptions?: AjvOptions;
+  decoratorName?: string;
 }
 
 function fastifyNodeConfigPlugin<T>(
@@ -26,7 +27,9 @@ function fastifyNodeConfigPlugin<T>(
     });
   }
 
-  fastify.decorate('config', {
+  const decoratorName = opts?.decoratorName ?? 'config';
+
+  fastify.decorate(decoratorName, {
     getter() {
       return checkedConfig;
     },
