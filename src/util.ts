@@ -1,7 +1,7 @@
 import { type IConfig } from 'config';
 import Ajv, { type JSONSchemaType, type Options as AjvOptions } from 'ajv';
 
-type ConfigValue = Config | string | number | boolean | null | unknown[] | object;
+type ConfigValue = Config | string | number | boolean | null | unknown[];
 
 type Config = {
   [key: string]: ConfigValue;
