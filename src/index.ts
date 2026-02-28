@@ -1,6 +1,7 @@
 import config from 'config';
 import fp from 'fastify-plugin';
-import type Ajv, { JSONSchemaType, Options as AjvOptions } from 'ajv';
+import type Ajv from 'ajv';
+import type { JSONSchemaType, Options as AjvOptions } from 'ajv';
 import type { FastifyInstance } from 'fastify';
 import { wrapConfig, validateSchema } from './util.js';
 
