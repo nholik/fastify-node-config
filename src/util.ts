@@ -1,13 +1,26 @@
 import { type IConfig } from 'config';
-import Ajv, { type JSONSchemaType } from 'ajv';
+import Ajv, { type JSONSchemaType, type Options as AjvOptions } from 'ajv';
+
+type ConfigValue = Config | string | number | boolean | null | unknown[];
 
 type Config = {
-  [key: string]: Config | string | number | boolean | null;
+  [key: string]: ConfigValue;
+};
+
+const isPlainObject = (value: unknown): value is Record<string, unknown> => {
+  if (value === null || typeof value !== 'object') {
+    return false;
+  }
+  const proto = Object.getPrototypeOf(value);
+  return proto === Object.prototype || proto === null;
 };
 
 const createErrorHandler = (throwOnMissing: boolean) => {
   return {
-    get: function (target: Config, prop: string) {
+    get: function (target: Config, prop: string | symbol) {
+      if (typeof prop === 'symbol') {
+        return (target as Record<symbol, unknown>)[prop];
+      }
       if (prop !== 'toJSON' && !(prop in target)) {
         if (throwOnMissing) {
           throw new Error(`Config property '${prop}' not found.`);
@@ -22,6 +35,8 @@ const createErrorHandler = (throwOnMissing: boolean) => {
 const bindMakeGetter = (sourceConfig: IConfig, throwOnMissing: boolean) => {
   return (chkdConfig: Config, prop: string, configPath: string) => {
     Object.defineProperty(chkdConfig, prop, {
+      enumerable: true,
+      configurable: true,
       get() {
         if (sourceConfig.has(configPath)) {
           return sourceConfig.get(configPath);
@@ -39,13 +54,13 @@ export const wrapConfig = (sourceConfig: IConfig, throwOnMissing: boolean) => {
   const setupGetter = bindMakeGetter(sourceConfig, throwOnMissing);
   const errorHandler = createErrorHandler(throwOnMissing);
 
-  const applyConfigCheck = (obj: Config, path: string) => {
+  const applyConfigCheck = (obj: Record<string, unknown>, path: string) => {
     const chkdConfig: Config = {};
 
     for (const [prop, value] of Object.entries(obj)) {
       const configPath = path === '' ? prop : `${path}.${prop}`;
 
-      if (typeof value === 'object' && value !== null) {
+      if (isPlainObject(value)) {
         chkdConfig[prop] = applyConfigCheck(value, configPath);
       } else {
         setupGetter(chkdConfig, prop, configPath);
@@ -60,17 +75,26 @@ export const wrapConfig = (sourceConfig: IConfig, throwOnMissing: boolean) => {
   return new Proxy(checkedConfig, errorHandler);
 };
 
+export type ValidateSchemaOptions = {
+  ajv?: Ajv;
+  ajvOptions?: AjvOptions;
+};
+
+const defaultAjvOptions: AjvOptions = {
+  allErrors: true,
+  removeAdditional: true,
+  useDefaults: true,
+  coerceTypes: true,
+  allowUnionTypes: true,
+};
+
 export const validateSchema = <T>(
   config: unknown,
-  schema: JSONSchemaType<T>
+  schema: JSONSchemaType<T>,
+  options: ValidateSchemaOptions = {}
 ) => {
-  const ajv = new Ajv({
-    allErrors: true,
-    removeAdditional: true,
-    useDefaults: true,
-    coerceTypes: true,
-    allowUnionTypes: true,
-  });
+  const ajv =
+    options.ajv ?? new Ajv({ ...defaultAjvOptions, ...options.ajvOptions });
   const validate = ajv.compile(schema);
   const valid = validate(config);
   if (!valid) {

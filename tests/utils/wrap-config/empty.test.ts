@@ -29,6 +29,11 @@ describe('wrapConfig', async () => {
       it('throws error for any property', () => {
         expect(() => wrappedConfig.missing).toThrow();
       });
+      it('does not throw on symbol access', () => {
+        expect(() => {
+          Reflect.get(wrappedConfig as any, Symbol.toStringTag);
+        }).not.toThrow();
+      });
       it('allows access to toJSON', () => {
         expect((wrappedConfig as any).toJSON).toBeUndefined();
       });
