@@ -2,11 +2,6 @@
 
 ## Proposed Enhancements (prioritized)
 
-### High Impact
-- Add an `exports` map in `package.json` (`import`/`require`/`types`) to ensure Node ESM resolves to `dist/esm` and CJS to `dist/cjs`.
-- Allow passing a custom Ajv instance or options (e.g., `ajv` or `ajvOptions`) to support formats/keywords and control validation mutation behavior.
-- Add a `decoratorName` option (default `config`) to avoid collisions with other plugins and support multiple config decorations.
-
 ### Medium Impact
 - Add `fastify` as a peer dependency with a supported range to enforce compatibility.
 - Export the plugin options type from `src/index.ts` to improve TypeScript ergonomics.
@@ -16,6 +11,11 @@
 - Add an `engines` field to document the supported Node versions.
 
 ## Completed
+
+### Enhancements
+- Add an `exports` map in `package.json` (`import`/`require`/`types`) to ensure Node ESM resolves to `dist/esm` and CJS to `dist/cjs`. (done)
+- Allow passing a custom Ajv instance or options (e.g., `ajv` or `ajvOptions`) to support formats/keywords and control validation mutation behavior. (done)
+- Add a `decoratorName` option (default `config`) to avoid collisions with other plugins and support multiple config decorations. (done)
 
 ### High Risk
 - Make config leaf properties enumerable (and optionally configurable) so `Object.keys`/`JSON.stringify` include values. (done)
