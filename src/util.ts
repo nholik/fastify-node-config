@@ -1,5 +1,5 @@
 import { type IConfig } from 'config';
-import Ajv, { type JSONSchemaType } from 'ajv';
+import Ajv, { type JSONSchemaType, type Options as AjvOptions } from 'ajv';
 
 type ConfigValue = Config | string | number | boolean | null | unknown[] | object;
 
@@ -75,17 +75,26 @@ export const wrapConfig = (sourceConfig: IConfig, throwOnMissing: boolean) => {
   return new Proxy(checkedConfig, errorHandler);
 };
 
+export type ValidateSchemaOptions = {
+  ajv?: Ajv;
+  ajvOptions?: AjvOptions;
+};
+
+const defaultAjvOptions: AjvOptions = {
+  allErrors: true,
+  removeAdditional: true,
+  useDefaults: true,
+  coerceTypes: true,
+  allowUnionTypes: true,
+};
+
 export const validateSchema = <T>(
   config: unknown,
-  schema: JSONSchemaType<T>
+  schema: JSONSchemaType<T>,
+  options: ValidateSchemaOptions = {}
 ) => {
-  const ajv = new Ajv({
-    allErrors: true,
-    removeAdditional: true,
-    useDefaults: true,
-    coerceTypes: true,
-    allowUnionTypes: true,
-  });
+  const ajv =
+    options.ajv ?? new Ajv({ ...defaultAjvOptions, ...options.ajvOptions });
   const validate = ajv.compile(schema);
   const valid = validate(config);
   if (!valid) {

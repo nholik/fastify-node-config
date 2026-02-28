@@ -179,7 +179,7 @@ declare module 'fastify' {
 
 ## Options
 
-Two optional parameters can be set when registering `fastify-node-config`: schema and safe.
+Four optional parameters can be set when registering `fastify-node-config`: schema, safe, ajv, and ajvOptions.
 
 
 ### Schema
@@ -193,6 +193,12 @@ A second parameter `safe` when true will cause an exception to occur when trying
 // safe defaults to false when omitted
 fastify.register(fastifyNodeConfig, { schema })
 ```
+
+### Ajv
+Provide a preconfigured Ajv instance to use for validation. This is useful for adding custom keywords or formats. When `ajv` is provided, `ajvOptions` is ignored.
+
+### AjvOptions
+Optional Ajv constructor options used when creating the default validator. These values are merged on top of the built-in defaults.
 ```js
 type AppConfig = {
   db :{

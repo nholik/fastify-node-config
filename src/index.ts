@@ -1,12 +1,14 @@
 import config from 'config';
 import fp from 'fastify-plugin';
-import type { JSONSchemaType } from 'ajv';
+import type Ajv, { JSONSchemaType, Options as AjvOptions } from 'ajv';
 import type { FastifyInstance } from 'fastify';
 import { wrapConfig, validateSchema } from './util.js';
 
 interface PluginOptions<T> {
   schema?: JSONSchemaType<T>;
   safe?: boolean;
+  ajv?: Ajv;
+  ajvOptions?: AjvOptions;
 }
 
 function fastifyNodeConfigPlugin<T>(
@@ -18,7 +20,10 @@ function fastifyNodeConfigPlugin<T>(
   const checkedConfig = wrapConfig(config, throwOnMissing);
 
   if (opts?.schema) {
-    validateSchema(config.util.toObject(), opts.schema);
+    validateSchema(config.util.toObject(), opts.schema, {
+      ajv: opts.ajv,
+      ajvOptions: opts.ajvOptions,
+    });
   }
 
   fastify.decorate('config', {
